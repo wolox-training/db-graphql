@@ -1,7 +1,7 @@
 {
-  "name": "express-graphql-bootstrap",
-  "version": "0.1.0",
-  "description": "express-graphql-bootstrap",
+  "name": "graphql-training",
+  "version": "1.0.0",
+  "description": "graphql-training",
   "engines": {
     "node": "10.14.1",
     "npm": "6.4.1"
