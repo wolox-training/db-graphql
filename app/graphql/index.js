@@ -1,4 +1,5 @@
 const { makeExecutableSchema } = require('graphql-tools');
+
 const types = require('./types');
 const inputs = require('./inputs');
 const users = require('./users');
