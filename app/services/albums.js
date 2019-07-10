@@ -11,18 +11,21 @@ exports.getAlbum = id => {
     json: true
   };
   logger.info(`Request to make: ${options.method} ${options.uri}`);
+  return request(options).catch(error => {
+    throw errors.albumApiError(error.message);
+  });
+};
 
-  return request(options)
-    .then(album =>
-      this.getPhotos({ albumId: album.id }).then(photos => ({
-        ...album,
-        artist: album.userId,
-        photos
-      }))
-    )
-    .catch(error => {
-      throw errors.albumApiError(error.message);
-    });
+exports.getAlbums = () => {
+  const options = {
+    method: 'GET',
+    uri: `${albumsApi.endpoint}${albumsApi.routes.albums}`,
+    json: true
+  };
+  logger.info(`Request to make: ${options.method} ${options.uri}`);
+  return request(options).catch(error => {
+    throw errors.albumApiError(error.message);
+  });
 };
 
 exports.getPhotos = qs => {
@@ -34,7 +37,6 @@ exports.getPhotos = qs => {
   };
   logger.info(`Request to make: ${options.method} ${options.uri} ${JSON.stringify(options.qs)}`);
   return request(options).catch(error => {
-    logger.info(error);
     throw errors.albumApiError(error.message);
   });
 };

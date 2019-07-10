@@ -3,10 +3,10 @@ const { makeExecutableSchema } = require('graphql-tools');
 const types = require('./types');
 const inputs = require('./inputs');
 const users = require('./users');
-const album = require('./albums');
+const albums = require('./albums');
 const healthCheck = require('./healthCheck');
 
-const typeDefs = [types, inputs, ...users.schemas, ...healthCheck.schemas, ...album.schemas];
+const typeDefs = [types, inputs, ...users.schemas, ...healthCheck.schemas, ...albums.schemas];
 
 module.exports = makeExecutableSchema({
   typeDefs,
@@ -14,13 +14,16 @@ module.exports = makeExecutableSchema({
     Query: {
       ...healthCheck.queries,
       ...users.queries,
-      ...album.queries
+      ...albums.queries
     },
     Mutation: {
       ...users.mutations
     },
     Subscription: {
       ...users.subscriptions
+    },
+    Album: {
+      ...albums.typeResolvers
     }
   }
 });
