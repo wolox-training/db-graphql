@@ -4,16 +4,23 @@ const errors = require('../errors');
 const logger = require('../logger');
 const { albumsApi } = require('../../config').common;
 
+exports.executeRequest = options => {
+  logger.info(`Request: ${options.method} ${options.uri} ${options.qs ? JSON.stringify(options.qs) : ''}`);
+  if (options.headers) {
+    logger.info(`Headers: [${Object.keys(options.headers).join(', ')}]`);
+  }
+  return request(options).catch(error => {
+    throw errors.albumApiError(error.message);
+  });
+};
+
 exports.getAlbum = id => {
   const options = {
     method: 'GET',
     uri: `${albumsApi.endpoint}${albumsApi.routes.albums}/${id}`,
     json: true
   };
-  logger.info(`Request to make: ${options.method} ${options.uri}`);
-  return request(options).catch(error => {
-    throw errors.albumApiError(error.message);
-  });
+  return exports.executeRequest(options);
 };
 
 exports.getAlbums = () => {
@@ -22,10 +29,7 @@ exports.getAlbums = () => {
     uri: `${albumsApi.endpoint}${albumsApi.routes.albums}`,
     json: true
   };
-  logger.info(`Request to make: ${options.method} ${options.uri}`);
-  return request(options).catch(error => {
-    throw errors.albumApiError(error.message);
-  });
+  return exports.executeRequest(options);
 };
 
 exports.getPhotos = qs => {
@@ -35,8 +39,5 @@ exports.getPhotos = qs => {
     qs,
     json: true
   };
-  logger.info(`Request to make: ${options.method} ${options.uri} ${JSON.stringify(options.qs)}`);
-  return request(options).catch(error => {
-    throw errors.albumApiError(error.message);
-  });
+  return exports.executeRequest(options);
 };

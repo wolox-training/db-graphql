@@ -10,15 +10,15 @@ exports.getAlbum = (root, args) => {
 };
 
 exports.getAlbums = (root, args) => {
-  const { limit, offset, orderBy } = args;
-  logger.info(`Fetching albums list ${limit} ${offset} ${orderBy}`);
+  const { offset, limit, orderBy } = args;
+  logger.info(`Fetching albums list... offset: ${offset}, limit: ${limit}, orderBy: ${orderBy}`);
   return albumsService.getAlbums().then(albums =>
     albums
+      .slice(offset, offset + limit)
       .map(album => ({
         ...album,
         artist: album.userId
       }))
-      .slice(offset, offset + limit)
       .sort((prev, next) => prev[orderBy] > next[orderBy])
   );
 };
@@ -30,5 +30,5 @@ exports.getPhotos = (root, args) => {
 };
 
 exports.typeResolvers = {
-  photos: this.getPhotos
+  photos: exports.getPhotos
 };
