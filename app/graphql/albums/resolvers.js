@@ -2,13 +2,12 @@ const logger = require('../../logger');
 const albumsHelpers = require('../../helpers/albums');
 const albumsService = require('../../services/albums');
 
-exports.getAlbum = (root, args) => {
-  logger.info(`Fetching album with id: ${args.id}`);
-  return albumsService.getAlbum(args.id).then(albumsHelpers.albumMapper);
+exports.getAlbum = (root, { id }) => {
+  logger.info(`Fetching album with id: ${id}`);
+  return albumsService.getAlbum(id).then(albumsHelpers.albumMapper);
 };
 
-exports.getAlbums = (root, args) => {
-  const { filter, offset, limit, orderBy } = args;
+exports.getAlbums = (root, { filter, offset, limit, orderBy }) => {
   logger.info(`Fetching albums list... offset: ${offset}, limit: ${limit}, orderBy: ${orderBy}`);
   return albumsService
     .getAlbums()
