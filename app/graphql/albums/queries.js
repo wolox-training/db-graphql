@@ -1,18 +1,16 @@
 const { gql } = require('apollo-server');
 
-const logger = require('../../logger');
-const albumsService = require('../../services/albums');
+const resolvers = require('./resolvers');
 
 module.exports = {
   queries: {
-    album: (_, { id }) => {
-      logger.info(`Fetching album with id: ${id}`);
-      return albumsService.getAlbum(id);
-    }
+    album: resolvers.getAlbum,
+    albums: resolvers.getAlbums
   },
   schema: gql`
     extend type Query {
       album(id: ID!): Album!
+      albums(offset: Int, limit: Int, orderBy: String): [Album]
     }
   `
 };
