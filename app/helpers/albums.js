@@ -19,9 +19,8 @@ exports.orderBy = (albums, orderBy) => albums.sort((prev, next) => (prev[orderBy
 
 exports.filterAndFormat = (rawAlbums, modifiers) => {
   const { filter, offset, limit, orderBy } = modifiers;
-  let albums = exports.albumsMapper(rawAlbums);
-  albums = filter ? exports.filterByTitle(albums, filter) : albums;
-  albums = limit ? exports.paginate(albums, offset, limit) : albums;
-  albums = orderBy ? exports.orderBy(albums, orderBy) : albums;
-  return albums;
+  const mappedAlbums = exports.albumsMapper(rawAlbums);
+  const filteredAlbums = filter ? exports.filterByTitle(mappedAlbums, filter) : mappedAlbums;
+  const paginatedAlbums = limit ? exports.paginate(filteredAlbums, offset, limit) : filteredAlbums;
+  return orderBy ? exports.orderBy(paginatedAlbums, orderBy) : paginatedAlbums;
 };
