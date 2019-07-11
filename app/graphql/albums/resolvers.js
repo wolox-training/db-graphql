@@ -8,18 +8,11 @@ exports.getAlbum = (root, args) => {
 };
 
 exports.getAlbums = (root, args) => {
-  const { offset, limit, orderBy, filter } = args;
+  const { filter, offset, limit, orderBy } = args;
   logger.info(`Fetching albums list... offset: ${offset}, limit: ${limit}, orderBy: ${orderBy}`);
-  let albums = [];
   return albumsService
     .getAlbums()
-    .then(albumsHelpers.albumsMapper)
-    .then(result => {
-      albums = filter ? albumsHelpers.filterByTitle(result, filter) : result;
-      albums = limit ? albumsHelpers.paginate(albums, offset, limit) : albums;
-      albums = orderBy ? albumsHelpers.orderBy(albums, orderBy) : albums;
-      return albums;
-    });
+    .then(albums => albumsHelpers.filterAndFormat(albums, { filter, offset, limit, orderBy }));
 };
 
 exports.getPhotos = (root, args) => {
