@@ -1,16 +1,15 @@
 const logger = require('../../logger');
 const albumsService = require('../../services/albums');
 
-exports.getAlbum = (root, args) => {
-  logger.info(`Fetching album with id: ${args.id}`);
-  return albumsService.getAlbum(args.id).then(album => ({
+exports.getAlbum = (root, { id }) => {
+  logger.info(`Fetching album with id: ${id}`);
+  return albumsService.getAlbum(id).then(album => ({
     ...album,
     artist: album.userId
   }));
 };
 
-exports.getAlbums = (root, args) => {
-  const { offset, limit, orderBy } = args;
+exports.getAlbums = (root, { offset, limit, orderBy }) => {
   logger.info(`Fetching albums list... offset: ${offset}, limit: ${limit}, orderBy: ${orderBy}`);
   return albumsService.getAlbums().then(albums =>
     albums
