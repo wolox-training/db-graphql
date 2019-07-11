@@ -1,25 +1,17 @@
 const logger = require('../../logger');
+const albumsHelpers = require('../../helpers/albums');
 const albumsService = require('../../services/albums');
 
 exports.getAlbum = (root, { id }) => {
   logger.info(`Fetching album with id: ${id}`);
-  return albumsService.getAlbum(id).then(album => ({
-    ...album,
-    artist: album.userId
-  }));
+  return albumsService.getAlbum(id).then(albumsHelpers.albumMapper);
 };
 
-exports.getAlbums = (root, { offset, limit, orderBy }) => {
+exports.getAlbums = (root, { filter, offset, limit, orderBy }) => {
   logger.info(`Fetching albums list... offset: ${offset}, limit: ${limit}, orderBy: ${orderBy}`);
-  return albumsService.getAlbums().then(albums =>
-    albums
-      .slice(offset, offset + limit)
-      .map(album => ({
-        ...album,
-        artist: album.userId
-      }))
-      .sort((prev, next) => prev[orderBy] > next[orderBy])
-  );
+  return albumsService
+    .getAlbums()
+    .then(albums => albumsHelpers.filterAndFormat(albums, { filter, offset, limit, orderBy }));
 };
 
 exports.getPhotos = (root, args) => {
