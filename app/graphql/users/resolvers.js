@@ -12,7 +12,7 @@ exports.createUser = (root, { user }) => {
       return createdUser;
     })
     .catch(error => {
-      logger.error(`Failed to create user. Due to: ${error.message}`);
+      logger.error(`Failed to create user. Error: ${error.message}`);
       throw error;
     });
 };
