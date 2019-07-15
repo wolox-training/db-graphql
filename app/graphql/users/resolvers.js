@@ -1,11 +1,11 @@
 const logger = require('../../logger');
-const usersHelpers = require('../../helpers/users');
+const commonHelpers = require('../../helpers/common');
 const usersService = require('../../services/users');
 
 exports.createUser = (root, { user }) => {
   logger.info(`Registering a new user: ${user.email}`);
-  return usersHelpers
-    .encodePassword(user.password)
+  return commonHelpers
+    .encodeString(user.password)
     .then(hashedPassword => usersService.createUser({ ...user, password: hashedPassword }))
     .then(createdUser => {
       logger.info(`Created user ${createdUser.name} with id ${createdUser.id} successfully`);
