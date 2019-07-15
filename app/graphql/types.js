@@ -4,12 +4,15 @@ module.exports = gql`
   type Query
   type Mutation
   type Subscription
+
   type User {
-    id: ID!
     name: String!
+    firstName: String! @deprecated(reason: "Use 'name' field instead")
     lastName: String!
+    username: String! @deprecated
     email: String!
     password: String!
+    id: ID!
   }
   type AccessToken {
     accessToken: String!
