@@ -7,31 +7,30 @@ module.exports = {
         allowNull: false,
         primaryKey: true
       },
-      name: {
+      firstName: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      last_name: {
+      lastName: {
         type: Sequelize.STRING,
         allowNull: false
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       email: {
         type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
       deleted_at: Sequelize.DATE
     }),
 
