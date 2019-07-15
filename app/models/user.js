@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      firstName: {
+      name: {
         type: DataTypes.STRING,
         field: 'first_name',
         allowNull: false
@@ -17,12 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         field: 'last_name',
         allowNull: false
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       email: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
       },
       password: {
