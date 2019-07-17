@@ -5,9 +5,13 @@ const createError = (message, statusCode) => new ApolloError(message, statusCode
 const errorCodes = {
   DEFAULT_ERROR: 500,
   BAD_REQUEST: 400,
-  ALBUM_API_ERROR: 503
+  ALBUM_API_ERROR: 503,
+  DATABASE_ERROR: 503,
+  UNIQUE_EMAIL_ERROR: 409
 };
 
 exports.defaultError = message => createError(message, errorCodes.DEFAULT_ERROR);
 exports.badRequest = message => createError(message, errorCodes.BAD_REQUEST);
 exports.albumApiError = message => createError(message, errorCodes.ALBUM_API_ERROR);
+exports.databaseError = message => createError(message, errorCodes.DATABASE_ERROR);
+exports.uniqueEmailError = message => createError(message, errorCodes.UNIQUE_EMAIL_ERROR);
