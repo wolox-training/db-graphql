@@ -25,6 +25,11 @@ module.exports = gql`
     artist: String!
     photos: [Photo]
   }
+  enum OrderAlbumsBy {
+    ID
+    TITLE
+    ARTIST
+  }
   type Photo {
     id: ID!
     albumId: ID!

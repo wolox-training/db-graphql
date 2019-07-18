@@ -19,7 +19,7 @@ const getAlbums = params => {
     albums(
       offset: ${offset ? offset : 0}, 
       limit: ${limit ? limit : 0}, 
-      orderBy: "${orderBy ? orderBy : ''}",
+      orderBy: ${orderBy ? orderBy : 'ID'},
       filter: "${filter ? filter : ''}") {
       id
       title
