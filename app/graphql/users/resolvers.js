@@ -16,3 +16,7 @@ exports.createUser = (root, { user }) => {
       throw error;
     });
 };
+
+exports.typeResolvers = {
+  name: root => `${root.name} ${root.lastName}`
+};

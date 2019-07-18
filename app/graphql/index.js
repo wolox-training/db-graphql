@@ -27,6 +27,9 @@ const schema = makeExecutableSchema({
     Album: {
       ...albums.typeResolvers
     },
+    User: {
+      ...users.typeResolvers
+    },
     ...enumsResolvers
   }
 });
