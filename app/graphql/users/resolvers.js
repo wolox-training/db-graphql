@@ -1,3 +1,5 @@
+const util = require('util');
+
 const errors = require('../../errors');
 const logger = require('../../logger');
 const commonHelpers = require('../../helpers/common');
@@ -19,7 +21,7 @@ exports.createUser = (root, { user }) => {
 };
 
 exports.getUser = (root, args) => {
-  logger.info(`Fetching user with ${JSON.stringify(args)}`);
+  logger.info(`Fetching user with ${util.inspect(args)}`);
   return usersService
     .getUser(args)
     .then(user => (user ? user : Promise.reject(errors.userNotFoundError('The user was not found'))))
