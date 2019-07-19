@@ -17,10 +17,10 @@ const getAlbums = params => {
   return gql`
   query {
     albums(
-      offset: ${offset ? offset : 0}, 
-      limit: ${limit ? limit : 0}, 
-      orderBy: ${orderBy ? orderBy : 'ID'},
-      filter: "${filter ? filter : ''}") {
+      offset: ${offset || 0}, 
+      limit: ${limit || 0}, 
+      orderBy: ${orderBy || 'ID'},
+      filter: "${filter || ''}") {
       id
       title
       artist
