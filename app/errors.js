@@ -8,7 +8,8 @@ const errorCodes = {
   ALBUM_API_ERROR: 503,
   DATABASE_ERROR: 503,
   UNIQUE_EMAIL_ERROR: 409,
-  INVALID_INPUT_ERROR: 422
+  INVALID_INPUT_ERROR: 422,
+  USER_NOT_FOUND_ERROR: 404
 };
 
 exports.defaultError = message => createError(message, errorCodes.DEFAULT_ERROR);
@@ -17,3 +18,4 @@ exports.albumApiError = message => createError(message, errorCodes.ALBUM_API_ERR
 exports.databaseError = message => createError(message, errorCodes.DATABASE_ERROR);
 exports.uniqueEmailError = message => createError(message, errorCodes.UNIQUE_EMAIL_ERROR);
 exports.invalidInputError = (message, invalidFields) => new UserInputError(message, { invalidFields });
+exports.userNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);
