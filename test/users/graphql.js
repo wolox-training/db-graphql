@@ -4,7 +4,6 @@ const getUser = id => gql`
     query {
         user(id: ${id}) {
           name,
-          lastName,
           email
         }
       }`;
@@ -12,8 +11,7 @@ const getUser = id => gql`
 const getUsers = () => gql`
   query {
     users {
-      firstName
-      lastName
+      name
       email
     }
   }
