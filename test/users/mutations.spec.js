@@ -1,4 +1,4 @@
-const { createUser } = require('./graphql');
+const { createUser, logIn } = require('./graphql');
 const { mutate } = require('../server.spec');
 const userFactory = require('../utils/factories/user');
 const { User } = require('../../app/models');
@@ -51,5 +51,42 @@ describe('users', () => {
           return userCreateMock.mockRestore();
         });
     });
+
+    it('should successfully authenticate the user', () =>
+      userFactory
+        .attributes()
+        .then(user =>
+          mutate(createUser(user)).then(() => mutate(logIn({ email: user.email, password: user.password })))
+        )
+        .then(response => {
+          expect(response.data.logIn).toHaveProperty('accessToken', expect.any(String));
+          expect(response.data.logIn).toHaveProperty('expiresIn', expect.any(Number));
+        }));
+
+    it('should fail to athenticate due to wrong email', () =>
+      userFactory
+        .attributes()
+        .then(user =>
+          mutate(createUser(user)).then(() =>
+            mutate(logIn({ email: 'wrong@email.com', password: user.password }))
+          )
+        )
+        .then(response => {
+          expect(response).toHaveProperty('errors', expect.any(Array));
+          expect(response.errors[0].message).toEqual('The email or password provided is incorrect');
+        }));
+
+    it('should fail to athenticate due to wrong password', () =>
+      userFactory
+        .attributes()
+        .then(user =>
+          mutate(createUser(user)).then(() =>
+            mutate(logIn({ email: user.email, password: 'wrong_password' }))
+          )
+        )
+        .then(response => {
+          expect(response).toHaveProperty('errors', expect.any(Array));
+          expect(response.errors[0].message).toEqual('The email or password provided is incorrect');
+        }));
   });
 });
