@@ -1,6 +1,7 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const { applyMiddleware } = require('graphql-middleware');
 
+const enumsResolvers = require('./enums');
 const types = require('./types');
 const inputs = require('./inputs');
 const users = require('./users');
@@ -25,7 +26,8 @@ const schema = makeExecutableSchema({
     },
     Album: {
       ...albums.typeResolvers
-    }
+    },
+    ...enumsResolvers
   }
 });
 

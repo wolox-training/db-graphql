@@ -1,13 +1,12 @@
 const { factory } = require('factory-girl'),
   faker = require('faker'),
-  models = require('../../app/models'),
-  { user: User } = models;
+  models = require('../../../app/models'),
+  { User } = models;
 
 factory.define('user', User, {
-  firstName: () => faker.name.firstName(),
+  name: () => faker.name.firstName(),
   lastName: () => faker.name.lastName(),
-  email: () => faker.internet.email(),
-  username: () => faker.internet.email(),
+  email: () => faker.internet.email(this.name, this.lastName, 'wolox.co'),
   password: () => faker.internet.password()
 });
 

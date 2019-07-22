@@ -1,6 +1,6 @@
 const { query } = require('../server.spec'),
   { getUser, getUsers } = require('./graphql'),
-  userFactory = require('../factories/user');
+  userFactory = require('../utils/factories/user');
 
 describe('users', () => {
   describe('queries', () => {
@@ -9,7 +9,7 @@ describe('users', () => {
         query(getUser(user.id)).then(res => {
           expect(res.data).toEqual({
             user: {
-              firstName: user.firstName,
+              name: user.name,
               lastName: user.lastName,
               email: user.email
             }
