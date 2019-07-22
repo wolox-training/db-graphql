@@ -9,7 +9,8 @@ const errorCodes = {
   DATABASE_ERROR: 503,
   UNIQUE_EMAIL_ERROR: 409,
   INVALID_INPUT_ERROR: 422,
-  USER_NOT_FOUND_ERROR: 404
+  USER_NOT_FOUND_ERROR: 404,
+  ITEM_NOT_FOUND_ERROR: 404
 };
 
 exports.defaultError = message => createError(message, errorCodes.DEFAULT_ERROR);
@@ -20,3 +21,4 @@ exports.uniqueEmailError = message => createError(message, errorCodes.UNIQUE_EMA
 exports.invalidInputError = (message, invalidFields) => new UserInputError(message, { invalidFields });
 exports.userNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);
 exports.badLogInError = message => new AuthenticationError(message);
+exports.itemNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);

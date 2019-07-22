@@ -20,6 +20,17 @@ exports.getPhotos = (root, args) => {
   return albumsService.getPhotos({ albumId: id });
 };
 
+exports.buyAlbum = (root, { albumId, userId }) => {
+  logger.info('Buying album with id:');
+  return albumsService
+    .getAlbum(albumId)
+    .then(album => albumsService.addAlbum({ ...albumsHelpers.albumMapper(album), userId }))
+    .catch(error => {
+      logger.error(`Failed to buy album. Error: ${error.message}`);
+      throw error;
+    });
+};
+
 exports.typeResolvers = {
   photos: exports.getPhotos
 };

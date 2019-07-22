@@ -3,6 +3,7 @@ const util = require('util');
 
 const errors = require('../errors');
 const logger = require('../logger');
+const { Album } = require('../models');
 const { albumsApi } = require('../../config').common;
 
 exports.executeRequest = options => {
@@ -11,7 +12,9 @@ exports.executeRequest = options => {
     logger.info(`Headers: [${Object.keys(options.headers).join(', ')}]`);
   }
   return request(options).catch(error => {
-    throw errors.albumApiError(error.message);
+    throw error.statusCode === 404
+      ? errors.itemNotFoundError('Item not found in external api')
+      : errors.albumApiError(error.message);
   });
 };
 
@@ -42,3 +45,10 @@ exports.getPhotos = qs => {
   };
   return exports.executeRequest(options);
 };
+
+exports.addAlbum = album =>
+  Album.create(album).catch(error => {
+    throw error.name === 'SequelizeUniqueConstraintError'
+      ? errors.uniqueEmailError(`The user has already bought album with id ${album.id}`)
+      : errors.databaseError(`${error.name}: ${error.message}`);
+  });
