@@ -20,11 +20,11 @@ exports.getPhotos = (root, args) => {
   return albumsService.getPhotos({ albumId: id });
 };
 
-exports.buyAlbum = (root, { albumId, userId }) => {
-  logger.info('Buying album with id:');
+exports.buyAlbum = (root, { albumId, user }) => {
+  logger.info(`Buying album with id: ${albumId} for user: ${user.email}`);
   return albumsService
     .getAlbum(albumId)
-    .then(album => albumsService.addAlbum({ ...albumsHelpers.albumMapper(album), userId }))
+    .then(album => albumsService.addAlbum({ ...albumsHelpers.albumMapper(album), userId: user.id }))
     .catch(error => {
       logger.error(`Failed to buy album. Error: ${error.message}`);
       throw error;

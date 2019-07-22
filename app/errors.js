@@ -20,5 +20,6 @@ exports.databaseError = message => createError(message, errorCodes.DATABASE_ERRO
 exports.uniqueEmailError = message => createError(message, errorCodes.UNIQUE_EMAIL_ERROR);
 exports.invalidInputError = (message, invalidFields) => new UserInputError(message, { invalidFields });
 exports.userNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);
-exports.badLogInError = message => new AuthenticationError(message);
 exports.itemNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);
+exports.badLogInError = message => new AuthenticationError(message);
+exports.sessionError = message => new AuthenticationError(message);
