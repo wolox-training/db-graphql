@@ -1,15 +1,15 @@
 const { gql } = require('apollo-server');
 
-const { User } = require('../../models');
+const resolvers = require('./resolvers');
 
 module.exports = {
   queries: {
-    user: (_, params) => User.getOne(params),
-    users: (_, params) => User.getAll(params)
+    user: resolvers.getUser,
+    users: resolvers.getUsers
   },
   schema: gql`
     extend type Query {
-      user(id: ID, firstName: String, email: String): User!
+      user(id: ID, name: String, email: String): User!
       users: [User]
     }
   `

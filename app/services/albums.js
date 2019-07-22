@@ -1,11 +1,12 @@
 const request = require('request-promise');
+const util = require('util');
 
 const errors = require('../errors');
 const logger = require('../logger');
 const { albumsApi } = require('../../config').common;
 
 exports.executeRequest = options => {
-  logger.info(`Request: ${options.method} ${options.uri} ${options.qs ? JSON.stringify(options.qs) : ''}`);
+  logger.info(`Request: ${options.method} ${options.uri} ${options.qs ? util.inspect(options.qs) : ''}`);
   if (options.headers) {
     logger.info(`Headers: [${Object.keys(options.headers).join(', ')}]`);
   }

@@ -8,7 +8,7 @@ module.exports = gql`
   type User {
     name: String!
     firstName: String! @deprecated(reason: "Use 'name' field instead")
-    lastName: String!
+    lastName: String! @deprecated(reason: "Use 'name' field instead")
     username: String! @deprecated
     email: String!
     password: String!
