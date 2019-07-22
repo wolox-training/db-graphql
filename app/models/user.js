@@ -34,6 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  User.associate = models => {
+    User.hasMany(models.Album);
+  };
+
   User.createModel = user => User.create(user);
 
   User.getOne = user => User.findOne({ where: user });
