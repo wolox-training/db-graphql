@@ -1,3 +1,4 @@
+const errors = require('../../errors');
 const logger = require('../../logger');
 const albumsHelpers = require('../../helpers/albums');
 const albumsService = require('../../services/albums');
@@ -26,8 +27,9 @@ exports.buyAlbum = (root, { albumId, user }) => {
     .getAlbum(albumId)
     .then(album => albumsService.addAlbum({ ...albumsHelpers.albumMapper(album), userId: user.id }))
     .catch(error => {
-      logger.error(`Failed to buy album. Error: ${error.message}`);
-      throw error;
+      const errorMessage = `Failed to buy album. Error: ${error.message}`;
+      logger.error(errorMessage);
+      throw errors.albumServiceError(errorMessage, error.extensions.code);
     });
 };
 

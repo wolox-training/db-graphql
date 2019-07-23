@@ -23,3 +23,4 @@ exports.userNotFoundError = message => createError(message, errorCodes.USER_NOT_
 exports.itemNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);
 exports.badLogInError = message => new AuthenticationError(message);
 exports.sessionError = message => new AuthenticationError(message);
+exports.albumServiceError = (message, statusCode) => createError(message, statusCode);
