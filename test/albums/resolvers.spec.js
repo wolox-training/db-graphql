@@ -25,7 +25,9 @@ describe('albums', () => {
         return createUser().then(({ data }) =>
           mutations.buyAlbum(undefined, { albumId, user: data.createUser }).then(() =>
             mutations.buyAlbum(undefined, { albumId, user: data.createUser }).catch(error => {
-              expect(error.message).toEqual(`The user has already bought album with id ${albumId}`);
+              expect(error.message).toEqual(
+                `Failed to buy album. Error: The user has already bought album with id ${albumId}`
+              );
             })
           )
         );
@@ -36,7 +38,7 @@ describe('albums', () => {
         albumMocks.mockGetAlbumNotFound(albumId);
         return createUser().then(({ data }) =>
           mutations.buyAlbum(undefined, { albumId, user: data.createUser }).catch(error => {
-            expect(error.message).toEqual('Item not found in external api');
+            expect(error.message).toEqual('Failed to buy album. Error: Item not found in external api');
           })
         );
       });
