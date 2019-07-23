@@ -1,6 +1,6 @@
 const { createTestClient } = require('apollo-server-testing'),
   { ApolloServer } = require('apollo-server'),
-  schema = require('../app/graphql');
+  { schema } = require('../app/graphql');
 
 const { query: _query, mutate } = createTestClient(new ApolloServer({ schema }));
 

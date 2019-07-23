@@ -15,6 +15,12 @@ exports.mockGetAlbumsOK = (responseAlbums = albumsFactory.albumsArray) => {
     .reply(200, responseAlbums);
 };
 
+exports.mockGetAlbumNotFound = albumId => {
+  nock(configAlbumsApi.endpoint)
+    .get(`${configAlbumsApi.routes.albums}/${albumId}`)
+    .reply(404, '404 - {}');
+};
+
 exports.mockGetPhotosOK = (albumId, responsePhotos = albumsFactory.photosArray) => {
   nock(configAlbumsApi.endpoint)
     .get(`${configAlbumsApi.routes.photos}`)
