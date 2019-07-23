@@ -4,11 +4,13 @@ const resolvers = require('./resolvers');
 
 module.exports = {
   mutations: {
-    createUser: resolvers.createUser
+    createUser: resolvers.createUser,
+    logIn: resolvers.logIn
   },
   schema: gql`
     extend type Mutation {
       createUser(user: UserInput!): User!
+      logIn(user: LogInInput!): AccessToken!
     }
   `
 };

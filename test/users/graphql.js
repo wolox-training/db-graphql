@@ -32,4 +32,16 @@ const createUser = userInput => ({
   variables: { userInput }
 });
 
-module.exports = { getUser, getUsers, createUser };
+const logIn = logInInput => ({
+  mutation: gql`
+    mutation logIn($logInInput: LogInInput!) {
+      logIn(user: $logInInput) {
+        accessToken
+        expiresIn
+      }
+    }
+  `,
+  variables: { logInInput }
+});
+
+module.exports = { getUser, getUsers, createUser, logIn };

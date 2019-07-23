@@ -1,4 +1,4 @@
-const { ApolloError, UserInputError } = require('apollo-server');
+const { ApolloError, UserInputError, AuthenticationError } = require('apollo-server');
 
 const createError = (message, statusCode) => new ApolloError(message, statusCode);
 
@@ -19,3 +19,4 @@ exports.databaseError = message => createError(message, errorCodes.DATABASE_ERRO
 exports.uniqueEmailError = message => createError(message, errorCodes.UNIQUE_EMAIL_ERROR);
 exports.invalidInputError = (message, invalidFields) => new UserInputError(message, { invalidFields });
 exports.userNotFoundError = message => createError(message, errorCodes.USER_NOT_FOUND_ERROR);
+exports.badLogInError = message => new AuthenticationError(message);
