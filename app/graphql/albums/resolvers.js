@@ -1,3 +1,4 @@
+const errors = require('../../errors');
 const logger = require('../../logger');
 const albumsHelpers = require('../../helpers/albums');
 const albumsService = require('../../services/albums');
@@ -18,6 +19,18 @@ exports.getPhotos = (root, args) => {
   const { id } = root ? root : args;
   logger.info(`Fetching photos of album with id: ${id}`);
   return albumsService.getPhotos({ albumId: id });
+};
+
+exports.buyAlbum = (root, { albumId, user }) => {
+  logger.info(`Buying album with id: ${albumId} for user: ${user.email}`);
+  return albumsService
+    .getAlbum(albumId)
+    .then(album => albumsService.addAlbum({ ...albumsHelpers.albumMapper(album), userId: user.id }))
+    .catch(error => {
+      const errorMessage = `Failed to buy album. Error: ${error.message}`;
+      logger.error(errorMessage);
+      throw errors.albumServiceError(errorMessage, error.extensions.code);
+    });
 };
 
 exports.typeResolvers = {

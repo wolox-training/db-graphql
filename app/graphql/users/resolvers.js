@@ -46,7 +46,7 @@ exports.logIn = (root, { user }) => {
     .validateCredentials(user)
     .then(storedUser =>
       storedUser
-        ? userHelpers.generateToken(user)
+        ? userHelpers.generateToken(storedUser)
         : Promise.reject(errors.badLogInError('The email or password provided is incorrect'))
     )
     .then(userHelpers.mapToken)

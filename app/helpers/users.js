@@ -13,6 +13,8 @@ exports.generateToken = (user, secret = sessionConfig.secret, expiresIn = sessio
   return jwt.signAsync(payload, secret, { expiresIn });
 };
 
+exports.validateToken = (token, secret = sessionConfig.secret) => jwt.verifyAsync(token, secret);
+
 exports.decodeToken = token => jwt.decode(token);
 
 exports.validateCredentials = user => {
