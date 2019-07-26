@@ -1,6 +1,5 @@
 const { makeExecutableSchema } = require('graphql-tools');
 const { applyMiddleware } = require('graphql-middleware');
-const { RedisCache } = require('apollo-server-cache-redis');
 
 const enumsResolvers = require('./enums');
 const types = require('./types');
@@ -9,7 +8,6 @@ const users = require('./users');
 const albums = require('./albums');
 const healthCheck = require('./healthCheck');
 
-const redis = new RedisCache();
 const typeDefs = [types, inputs, ...users.schemas, ...healthCheck.schemas, ...albums.schemas];
 
 const schema = makeExecutableSchema({
@@ -54,7 +52,6 @@ const schemaWithMiddlewares = applyMiddleware(schema, {
 module.exports = {
   schema: schemaWithMiddlewares,
   context: ({ req }) => ({
-    authorization: req.headers.authorization,
-    cache: redis
+    authorization: req.headers.authorization
   })
 };
