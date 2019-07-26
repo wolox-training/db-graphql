@@ -5,6 +5,12 @@ module.exports = gql`
   type Mutation
   type Subscription
 
+  directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+  enum CacheControlScope {
+    PUBLIC
+    PRIVATE
+  }
+
   type User {
     name: String!
     firstName: String! @deprecated(reason: "Use 'name' field instead")
@@ -19,7 +25,7 @@ module.exports = gql`
     refreshToken: String! @deprecated(reason: "Not used")
     expiresIn: Int!
   }
-  type Album {
+  type Album @cacheControl(maxAge: 3600) {
     id: ID!
     title: String!
     artist: String!

@@ -1,7 +1,8 @@
 const errors = require('../../errors');
 const { EMAIL_REGEX, PASSWORD_REGEX } = require('../../helpers/constants');
+const cacheHelpers = require('../../helpers/cache');
 
-exports.createUser = (resolve, root, args) => {
+const createUser = (resolve, root, args) => {
   const { user } = args;
   const errorList = [];
   if (!EMAIL_REGEX.test(user.email)) {
@@ -23,4 +24,19 @@ exports.createUser = (resolve, root, args) => {
     throw errors.invalidInputError('Invalid input values', errorList);
   }
   return resolve(root, args);
+};
+
+// eslint-disable-next-line max-params
+const cache = (resolve, root, args, context, info) =>
+  cacheHelpers
+    .shearchInCacheOr(root, args, context, info)
+    .then(cached => (cached ? cached : resolve(root, args, context, info)));
+
+module.exports = {
+  mutations: {
+    createUser
+  },
+  queries: {
+    cache
+  }
 };
