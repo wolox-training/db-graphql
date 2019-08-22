@@ -1,7 +1,7 @@
 const errors = require('../../errors');
 const { EMAIL_REGEX, PASSWORD_REGEX } = require('../../helpers/constants');
 
-exports.createUser = (resolve, root, args) => {
+const createUser = (resolve, root, args) => {
   const { user } = args;
   const errorList = [];
   if (!EMAIL_REGEX.test(user.email)) {
@@ -23,4 +23,10 @@ exports.createUser = (resolve, root, args) => {
     throw errors.invalidInputError('Invalid input values', errorList);
   }
   return resolve(root, args);
+};
+
+module.exports = {
+  mutations: {
+    createUser
+  }
 };

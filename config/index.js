@@ -54,6 +54,12 @@ const config = {
         albums: process.env.ALBUM_API_ROUTE_ALBUMS,
         photos: process.env.ALBUM_API_ROUTE_PHOTOS
       }
+    },
+    redisCache: {
+      host: process.env.REDIS_CACHE_HOST,
+      port: process.env.REDIS_CACHE_PORT,
+      password: process.env.REDIS_CACHE_PASSWORD,
+      timeToLive: process.env.REDIS_CACHE_TIME_TO_LIVE
     }
   }
 };

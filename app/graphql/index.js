@@ -37,12 +37,21 @@ const schema = makeExecutableSchema({
 
 const schemaWithMiddlewares = applyMiddleware(schema, {
   Mutation: {
-    ...users.middlewares,
-    ...albums.middlewares
+    ...users.middlewares.mutations,
+    ...albums.middlewares.mutations
+  },
+  Query: {
+    ...users.middlewares.queries,
+    ...albums.middlewares.queries
+  },
+  Album: {
+    ...albums.middlewares.typeResolvers
   }
 });
 
 module.exports = {
   schema: schemaWithMiddlewares,
-  context: ({ req }) => ({ authorization: req.headers.authorization })
+  context: ({ req }) => ({
+    authorization: req.headers.authorization
+  })
 };
